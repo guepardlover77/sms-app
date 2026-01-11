@@ -167,6 +167,7 @@ private fun SearchBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ConversationItem(
     conversation: Conversation,

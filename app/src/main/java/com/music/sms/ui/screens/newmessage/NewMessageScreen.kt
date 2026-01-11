@@ -112,7 +112,7 @@ fun NewMessageScreen(
                             onPhoneNumberEntered(phoneNumber)
                         }
                     )
-                    HorizontalDivider()
+                    Divider()
                 }
             }
 
