@@ -7,6 +7,9 @@ on:
     branches: [ master, main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -72,7 +75,6 @@ jobs:
             - Interface pastel (lavande, pervenche)
             - Bulles de messages style iMessage avec dégradés
             - Mode clair et sombre automatique
-            - Police Rubik (Google Fonts)
             - Recherche de conversations
             - Envoi/réception SMS
 
