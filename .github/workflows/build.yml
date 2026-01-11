@@ -28,17 +28,64 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
+
+      - name: Get version info
+        id: version
+        run: |
+          VERSION_NAME=$(grep 'versionName' app/build.gradle.kts | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          VERSION_CODE=$(grep 'versionCode' app/build.gradle.kts | head -1 | sed 's/[^0-9]*//g')
+          echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
+          echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION_NAME ($VERSION_CODE)"
+
+      - name: Rename APKs
+        run: |
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/PastelSMS-${{ steps.version.outputs.version_name }}-debug.apk
+          mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/PastelSMS-${{ steps.version.outputs.version_name }}-release.apk
+
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Build Release APK
-        run: ./gradlew assembleRelease
+          name: PastelSMS-debug
+          path: app/build/outputs/apk/debug/PastelSMS-${{ steps.version.outputs.version_name }}-debug.apk
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          name: PastelSMS-release
+          path: app/build/outputs/apk/release/PastelSMS-${{ steps.version.outputs.version_name }}-release.apk
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version_name }}-build.${{ github.run_number }}
+          name: PastelSMS v${{ steps.version.outputs.version_name }} (Build ${{ github.run_number }})
+          body: |
+            ## PastelSMS - Application SMS Moderne
+
+            Application SMS avec une interface moderne inspirée de Signal et iMessage.
+
+            ### Fonctionnalités
+            - Interface pastel (lavande, pervenche)
+            - Bulles de messages style iMessage avec dégradés
+            - Mode clair et sombre automatique
+            - Police Rubik (Google Fonts)
+            - Recherche de conversations
+            - Envoi/réception SMS
+
+            ### APKs
+            - **PastelSMS-debug.apk** - Version debug pour les tests
+            - **PastelSMS-release.apk** - Version release (non signée)
+
+            ---
+            Build #${{ github.run_number }} | Commit: ${{ github.sha }}
+          files: |
+            app/build/outputs/apk/debug/PastelSMS-${{ steps.version.outputs.version_name }}-debug.apk
+            app/build/outputs/apk/release/PastelSMS-${{ steps.version.outputs.version_name }}-release.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
