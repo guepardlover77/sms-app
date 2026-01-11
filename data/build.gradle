@@ -16,31 +16,47 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 android {
-    compileSdkVersion 29
-    publishNonDefault true
-    flavorDimensions "analytics"
-
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
+    namespace 'com.moez.QKSMS.data'
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdk 21
+        targetSdk 34
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    flavorDimensions = ["analytics"]
     productFlavors {
         withAnalytics { dimension "analytics" }
         noAnalytics { dimension "analytics" }
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 }
 
@@ -60,7 +76,6 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    compileOnly "javax.annotation:jsr250-api:1.0"
 
     // rxjava
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
@@ -68,9 +83,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
     // testing
-    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version", {
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version") {
         exclude group: "com.android.support", module: "support-annotations"
-    })
+    }
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
     testImplementation "androidx.test:runner:$androidx_testrunner_version"
     testImplementation "junit:junit:$junit_version"
@@ -86,14 +101,14 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
-    implementation 'io.michaelrocks:libphonenumber-android:8.12.57'
+    implementation 'io.michaelrocks:libphonenumber-android:8.13.27'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(":android-smsmms")
     implementation project(':common')
     implementation project(':domain')
 
-    withAnalyticsImplementation 'com.android.installreferrer:installreferrer:1.1'
-    withAnalyticsImplementation "com.amplitude:android-sdk:2.16.0"
+    withAnalyticsImplementation 'com.android.installreferrer:installreferrer:2.2'
+    withAnalyticsImplementation "com.amplitude:android-sdk:2.38.3"
 }
 
 repositories {
