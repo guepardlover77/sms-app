@@ -17,19 +17,8 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <corners
-        android:bottomLeftRadius="20dp"
-        android:bottomRightRadius="6dp"
-        android:topLeftRadius="20dp"
-        android:topRightRadius="6dp" />
-    <solid android:color="@android:color/white" />
-    <padding
-        android:bottom="10dp"
-        android:left="14dp"
-        android:right="14dp"
-        android:top="10dp" />
-
-</shape>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:fontProviderAuthority="com.google.android.gms.fonts"
+    app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"
+    app:fontProviderPackage="com.google.android.gms"
+    app:fontProviderQuery="Rubik"></font-family>
