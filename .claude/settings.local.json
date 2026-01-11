@@ -19,7 +19,8 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:jitpack.io)",
       "Bash(grep:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(gradle wrapper:*)"
     ]
   }
 }
