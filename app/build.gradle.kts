@@ -85,9 +85,6 @@ dependencies {
     // Coil for images
     implementation("io.coil-kt:coil-compose:2.5.0")
 
-    // Google Fonts
-    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
-
     // Debug
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
