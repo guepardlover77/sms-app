@@ -137,9 +137,6 @@ dependencies {
         exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
     }
 
-    // realm - using jitpack since android-adapters is not on maven central
-    implementation("com.github.nicl83:realm-android-adapters:v3.1.0-1") { transitive = false }
-
     // rxjava
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
