@@ -51,7 +51,9 @@ android {
 dependencies {
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    // Using OkHttp 2.x for MMS - the code uses internal APIs not available in 4.x
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    implementation 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
