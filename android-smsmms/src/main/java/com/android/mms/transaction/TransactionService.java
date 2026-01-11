@@ -506,6 +506,7 @@ public class TransactionService extends Service implements Observer {
         }
     }
 
+    @SuppressWarnings("deprecation")
     protected int beginMmsConnectivity() throws IOException {
         Timber.v("beginMmsConnectivity");
         // Take a wake lock so we don't fall asleep before the message is downloaded.
@@ -519,7 +520,18 @@ public class TransactionService extends Service implements Observer {
             }
         }
 
-        int result = mConnMgr.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, "enableMMS");
+        // startUsingNetworkFeature was removed in API 23 - use reflection for older devices
+        int result = 0;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            try {
+                java.lang.reflect.Method method = ConnectivityManager.class.getMethod(
+                    "startUsingNetworkFeature", int.class, String.class);
+                result = (Integer) method.invoke(mConnMgr, ConnectivityManager.TYPE_MOBILE, "enableMMS");
+            } catch (Exception e) {
+                Timber.w(e, "Failed to call startUsingNetworkFeature");
+                result = 0;
+            }
+        }
 
         Timber.v("beginMmsConnectivity: result=" + result);
 
@@ -533,6 +545,7 @@ public class TransactionService extends Service implements Observer {
         throw new IOException("Cannot establish MMS connectivity");
     }
 
+    @SuppressWarnings("deprecation")
     protected void endMmsConnectivity() {
         try {
             Timber.v("endMmsConnectivity");
@@ -540,9 +553,13 @@ public class TransactionService extends Service implements Observer {
             // cancel timer for renewal of lease
             mServiceHandler.removeMessages(EVENT_CONTINUE_MMS_CONNECTIVITY);
             if (mConnMgr != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                mConnMgr.stopUsingNetworkFeature(
-                        ConnectivityManager.TYPE_MOBILE,
-                        "enableMMS");
+                try {
+                    java.lang.reflect.Method method = ConnectivityManager.class.getMethod(
+                        "stopUsingNetworkFeature", int.class, String.class);
+                    method.invoke(mConnMgr, ConnectivityManager.TYPE_MOBILE, "enableMMS");
+                } catch (Exception e) {
+                    Timber.w(e, "Failed to call stopUsingNetworkFeature");
+                }
             }
         } finally {
             releaseWakeLock();
