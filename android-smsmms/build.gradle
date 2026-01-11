@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace 'com.moez.QKSMS.smsmms'
+    namespace 'com.klinker.android.send_message'
     compileSdk 34
 
     compileOptions {
