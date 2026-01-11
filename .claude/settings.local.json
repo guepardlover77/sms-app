@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew assembleDebug:*)",
+      "Bash(java -version:*)",
+      "Bash(set \"JAVA_HOME=C:\\\\Program Files\\\\Java\\\\jre1.8.0_471\")",
+      "Bash(\"C:\\\\Program Files \\(x86\\)\\\\Common Files\\\\Oracle\\\\Java\\\\java8path\\\\java.exe\" -version)",
+      "Bash(curl:*)",
+      "Bash(powershell:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git restore:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh api:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(gh run watch:*)",
+      "Bash(gh run view:*)",
+      "WebSearch",
+      "WebFetch(domain:mvnrepository.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:jitpack.io)",
+      "Bash(grep:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}

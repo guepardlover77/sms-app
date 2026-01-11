@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pastel SMS</string>
+
+    <!-- Conversation List -->
+    <string name="conversations_title">Messages</string>
+    <string name="conversations_empty">Aucune conversation</string>
+    <string name="conversations_search_hint">Rechercher une conversation</string>
+
+    <!-- Chat -->
+    <string name="chat_input_hint">Message</string>
+    <string name="chat_send">Envoyer</string>
+
+    <!-- Permissions -->
+    <string name="permission_sms_title">Permission SMS requise</string>
+    <string name="permission_sms_message">Cette application a besoin d\'accéder à vos SMS pour fonctionner.</string>
+    <string name="permission_contacts_title">Permission Contacts requise</string>
+    <string name="permission_contacts_message">Cette application a besoin d\'accéder à vos contacts pour afficher les noms.</string>
+    <string name="permission_grant">Autoriser</string>
+
+    <!-- Actions -->
+    <string name="action_new_message">Nouveau message</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_settings">Paramètres</string>
+
+    <!-- Time -->
+    <string name="time_now">Maintenant</string>
+    <string name="time_yesterday">Hier</string>
+</resources>
