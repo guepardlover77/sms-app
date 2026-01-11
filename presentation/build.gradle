@@ -141,8 +141,8 @@ dependencies {
         exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
     })
 
-    // realm
-    implementation("io.realm:android-adapters:$realm_adapters_version") { transitive = false }
+    // realm - using jitpack since android-adapters is not on maven central
+    implementation("com.github.realm:realm-android-adapters:4.0.0") { transitive = false }
     kapt "io.realm:realm-annotations:$realm_version"
     kapt "io.realm:realm-annotations-processor:$realm_version"
 
